@@ -12,17 +12,19 @@ angular.module('starter.controllers', [])
   //});
 
   $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+    $scope.remove = function(chat) {
+      Chats.remove(chat);
+    };
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
+.controller('CalendarCtrl', function($scope) {
+  
+})
+
 .controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+  //Let's try to auth with google calendar
 });
