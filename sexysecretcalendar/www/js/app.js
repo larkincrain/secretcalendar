@@ -7,21 +7,8 @@
 // 'starter.controllers' is found in controllers.js
 var app = angular.module('starter', ['ionic', 
   'starter.controllers', 
-  'starter.services', 
-  'gapi'
-  ])
-
-app.value('GoogleApp', {
-    apiKey: 'hXrWZpUQsaiU2qj35qPS2YRa',
-    clientId: '405463920283-gvhj4vh25jh2id44e5r40kicpld52ss8.apps.googleusercontent.com',
-    scopes: [
-      // whatever scopes you need for your app, for example:
-      'https://www.googleapis.com/auth/drive',
-      'https://www.googleapis.com/auth/youtube',
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/calendar.readonly'
-    ]
-  })
+  'starter.services'
+  ]);
 
 app.run([
   '$ionicPlatform',
