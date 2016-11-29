@@ -5,58 +5,50 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'angular-google-gapi'])
+var app = angular.module('starter', ['ionic', 
+  'starter.controllers', 
+  'starter.services', 
+  'gapi'
+  ])
 
-app.run(['$ionicPlatform', 'GAuth', 'GApi', 'GData', '$state', '$rootScope',
-  function($ionicPlatform, GAuth, GApi, GData, $state, $rootScope) {
+app.value('GoogleApp', {
+    apiKey: 'hXrWZpUQsaiU2qj35qPS2YRa',
+    clientId: '405463920283-gvhj4vh25jh2id44e5r40kicpld52ss8.apps.googleusercontent.com',
+    scopes: [
+      // whatever scopes you need for your app, for example:
+      'https://www.googleapis.com/auth/drive',
+      'https://www.googleapis.com/auth/youtube',
+      'https://www.googleapis.com/auth/userinfo.profile',
+      'https://www.googleapis.com/auth/calendar.readonly'
+    ]
+  })
 
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+app.run([
+  '$ionicPlatform',
+  '$state', 
+  '$rootScope',
+  '$window',
+  function(
+    $ionicPlatform, 
+    $state, 
+    $rootScope,
+    $window
+    ) {
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-  });
+    $ionicPlatform.ready(function() {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
 
-  //Let's start the google auth servies
-  function(GAuth, GApi, GData, $state, $rootScope) {
- 
-        $rootScope.gdata = GData;
- 
-        var CLIENT = 'yourGoogleAuthAPIKey';
-        var BASE = 'https://myGoogleAppEngine.appspot.com/_ah/api';
- 
-        GApi.load('myApiName','v1',BASE);
-        GApi.load('calendar','v3'); // for google api (https://developers.google.com/apis-explorer/) 
- 
-        GAuth.setClient(CLIENT);
-        GAuth.setScope("https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar.readonly"); // default scope is only https://www.googleapis.com/auth/userinfo.email 
- 
-    // load the auth api so that it doesn't have to be loaded asynchronously 
-    // when the user clicks the 'login' button.  
-    // That would lead to popup blockers blocking the auth window 
-    GAuth.load();
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
+    });
     
-    // or just call checkAuth, which in turn does load the oauth api. 
-    // if you do that, GAuth.load(); is unnecessary 
-        GAuth.checkAuth().then(
-            function (user) {
-                console.log(user.name + 'is login')
-                $state.go('webapp.home'); // an example of action if it's possible to 
-                        // authenticate user at startup of the application 
-            },
-            function() {
-                $state.go('login');       // an example of action if it's impossible to 
-                      // authenticate user at startup of the application 
-            }
-        );
-    }
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {

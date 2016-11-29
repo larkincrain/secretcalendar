@@ -21,7 +21,7 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('CalendarCtrl', function($scope) {
+.controller('CalendarCtrl', function($scope, Calendar) {
   
 })
 
